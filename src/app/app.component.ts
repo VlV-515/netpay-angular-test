@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ApiService } from "./api.service";
 
 @Component({
   selector: "app-root",
@@ -8,9 +9,19 @@ import { Component } from "@angular/core";
 export class AppComponent {
   inpCantidad = 0;
   resultadoTokenizar = {};
-  constructor() {}
+  constructor(private readonly apiSvc: ApiService) {}
 
   public btnTokenizar(): void {
     console.log(this.inpCantidad);
+    this.apiSvc.getTokenAmount(this.inpCantidad).subscribe(
+      (data) => {
+        console.log(data);
+        this.resultadoTokenizar = data;
+      },
+      (error) => {
+        alert("error");
+        console.log(error);
+      }
+    );
   }
 }
